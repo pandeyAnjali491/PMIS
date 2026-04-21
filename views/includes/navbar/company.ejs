@@ -1,0 +1,40 @@
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    <a href="/company/dashboard" class="text-2xl font-bold text-blue-600">Company Portal</a>
+
+    <nav class="flex items-center gap-6">
+      <a href="/company/dashboard" class="hover:text-blue-600">Home</a>
+
+      <!-- Profile Dropdown -->
+      <div class="relative">
+        <button id="profileBtn" class="flex items-center space-x-2 focus:outline-none">
+          <i class="fa-solid fa-user-circle text-2xl text-gray-600"></i>
+        </button>
+        <div id="profileMenu"
+             class="absolute right-0 hidden bg-white shadow-lg rounded-lg mt-2 py-2 w-40">
+          <a href="/company/profile" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+          <a href="/company/logout" class="block px-4 py-2 hover:bg-gray-100 text-red-500">Logout</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const profileBtn = document.getElementById("profileBtn");
+    const profileMenu = document.getElementById("profileMenu");
+
+    profileBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      profileMenu.classList.toggle("hidden");
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener("click", (e) => {
+      if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+        profileMenu.classList.add("hidden");
+      }
+    });
+  });
+</script>

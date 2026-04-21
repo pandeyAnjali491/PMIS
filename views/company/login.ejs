@@ -1,0 +1,136 @@
+<%- layout('layouts/boilerplate/login.ejs') %>
+<body class="body-bg body-text">
+
+  <style>
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 70vh;
+      padding: 2rem;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+      width: 400px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .login-container h2 {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 6px rgba(255, 140, 0, 0.3);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.3s;
+    }
+
+    .login-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .extra-links {
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .extra-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .extra-links a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Subtle animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <div class="login-wrapper">
+    <div class="login-container">
+      <h2>Company Login</h2>
+      <form id="loginForm" action="/company/login" method="post">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password"name="password" required>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+      <div class="extra-links">
+        <p>Don't have an account? <a href="/company/signup">Signup</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple validation
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if(email === "" || password === ""){
+        alert("Please fill in all fields!");
+      } else {
+        alert("Login successful for: " + email);
+        // TODO: send data to backend
+      }
+    });
+  </script>
+</body>

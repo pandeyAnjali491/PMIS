@@ -1,0 +1,191 @@
+<%- layout('layouts/boilerplate/login.ejs') %>
+
+  <body class="body-bg body-text">
+    <div class="container py-5 d-flex justify-content-center align-items-center">
+      <div class="bg-white shadow-lg rounded-2xl p-4 w-100" style="max-width: 900px;">
+        <h2 class="text-2xl font-bold text-center text-orange-500 mb-6">Student Signup</h2>
+
+        <form id="signupForm" class="row g-3 needs-validation" action="/student" method="post" novalidate>
+
+          <!-- Full Name -->
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="data[name]" class="form-control" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter your name</div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="data[email]" class="form-control" required>
+            <div class="invalid-feedback">Enter a valid email</div>
+          </div>
+
+          <!-- Phone -->
+          <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <input type="text" name="data[phone]" class="form-control" required>
+            <div class="invalid-feedback">Enter your phone number</div>
+          </div>
+
+          <!-- DOB -->
+          <div class="col-md-6">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" name="data[dob]" class="form-control" required>
+            <div class="invalid-feedback">Select your date of birth</div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-md-6">
+            <label class="form-label">Gender</label>
+            <select name="data[gender]" class="form-select" required>
+              <option value="">--Select Gender--</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+            <div class="invalid-feedback">Please select your gender</div>
+          </div>
+
+          <!-- State -->
+          <div class="col-md-6">
+            <label class="form-label">State</label>
+            <input type="text" name="data[state]" class="form-control" required>
+            <div class="invalid-feedback">Enter your state</div>
+          </div>
+
+          <!-- District -->
+          <div class="col-md-6">
+            <label class="form-label">District</label>
+            <input type="text" name="data[district]" class="form-control" required>
+            <div class="invalid-feedback">Enter your district</div>
+          </div>
+
+          <!-- Education -->
+          <div class="col-md-6">
+            <label class="form-label">Education</label>
+            <input type="text" name="data[education]" class="form-control" required>
+            <div class="invalid-feedback">Enter your education details</div>
+          </div>
+
+          <!-- College -->
+          <div class="col-md-6">
+            <label class="form-label">College</label>
+            <input type="text" name="data[college]" class="form-control" required>
+            <div class="invalid-feedback">Enter your college name</div>
+          </div>
+
+          <!-- Year of Graduation -->
+          <div class="col-md-3">
+            <label class="form-label">Graduation Year</label>
+            <input type="number" name="data[yearOfGraduation]" min="2000" max="2099" class="form-control" required>
+            <div class="invalid-feedback">Enter a valid graduation year (2000-2099)</div>
+          </div>
+
+           <!-- Course -->
+          <div class="col-md-3">
+            <label class="form-label">Course</label>
+            <input type="text" name="data[course]" class="form-control" placeholder="e.g. Btech, BBA " required>
+            <div class="invalid-feedback">Enter your course name</div>
+          </div>
+
+          <!-- Skills -->
+          <div class="col-12">
+            <label class="form-label">Skills (comma separated)</label>
+            <textarea name="data[skills]" class="form-control"></textarea>
+            <div class="invalid-feedback">Please enter at least one skill</div>
+          </div>
+
+          <!-- Preferred Domain -->
+          <div class="col-md-6">
+            <label class="form-label">Preferred Domain</label>
+            <input type="text" name="data[preferred_domain]" class="form-control" required>
+            <div class="invalid-feedback">Enter preferred domain</div>
+          </div>
+
+          <!-- Internship Type -->
+          <div class="col-md-6">
+            <label class="form-label">Internship Type</label>
+            <select name="data[internship_type]" class="form-select" required>
+              <option value="">--Select Internship Type--</option>
+              <option value="Remote">Remote</option>
+              <option value="Onsite">Onsite</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+            <div class="invalid-feedback">Please select internship type</div>
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <input type="password" id="password" name="data[password]" class="form-control" required>
+            <div class="invalid-feedback">Enter a password</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="col-md-6">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" id="confirm_password"class="form-control" required>
+            <p id="passwordError" class="text-danger small mt-1 hidden">Passwords do not match</p>
+            <div class="invalid-feedback">Enter Password</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Signup</button>
+          </div>
+        </form>
+
+        <p class="text-center mt-3" style="font-size: 0.9rem;">
+          Already have an account?
+          <a href="/student/login" class="text-decoration-none" style="color: blue;">Login</a>
+        </p>
+      </div>
+    </div>
+    <script>
+      (() => {
+        'use strict'
+
+        const forms = document.querySelectorAll('.needs-validation')
+        const password = document.getElementById('password')
+        const confirmPassword = document.getElementById('confirm_password')
+        const passwordError = document.getElementById('passwordError')
+
+        Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (password.value !== confirmPassword.value) {
+              confirmPassword.setCustomValidity("Passwords do not match")
+              passwordError.classList.remove("hidden")
+            } else {
+              confirmPassword.setCustomValidity("")
+              passwordError.classList.add("hidden")
+            }
+
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+      })()
+      (() => {
+  'use strict'
+
+ // Fetch all forms with class 'needs-validation'
+  const forms = document.querySelectorAll('.needs-validation')
+
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+    </script>
+  </body>

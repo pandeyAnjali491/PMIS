@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Scheme</title>
+    <meta name="description" content="Manage your account settings, preferences, and privacy options.">
+    <link rel="stylesheet" href="/css/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <!-- Add inside .navbar-left -->
+            <button id="mobile-menu-button" class="hamburger-btn" aria-label="Open sidebar">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-avatar" onclick="toggleProfileMenu()">
+                <img src="/css/profile.jpeg" alt="Profile"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="avatar-fallback" style="display: none;">
+                    <i data-lucide="user"></i>
+                </div>
+            </div>
+            <div class="profile-menu" id="profileMenu">
+                <a href="/student/profile">View Profile</a>
+                <a href="/student/settings">Settings</a>
+                <div class="menu-separator"></div>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title" id="sidebarTitle">PMIS</h2>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i data-lucide="chevron-left" id="toggleIcon"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/student/dashboard" class="nav-item" data-page="index">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/student/profile" class="nav-item" data-page="profile">
+                    <i data-lucide="user"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+                <a href="/student/internships" class="nav-item" data-page="internships">
+                    <i data-lucide="briefcase"></i>
+                    <span class="nav-text">Internships</span>
+                </a>
+                <a href="/student/settings" class="nav-item active" data-page="settings">
+                    <i data-lucide="settings"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="flex" style="align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h1 style="font-size: 2rem; font-weight: 700; color: hsl(var(--foreground));">Settings</h1>
+                    <button class="btn btn-primary" onclick="saveAllSettings()">
+                        <i data-lucide="save"></i>
+                        Save All Changes
+                    </button>
+                </div>
+
+                <div class="tabs" id="settingsTabs">
+                    <!-- Tab Navigation -->
+                    <div class="tab-list">
+                        <button class="tab-trigger active" data-tab="profile">Profile</button>
+                        <button class="tab-trigger" data-tab="notifications">Notifications</button>
+                        <button class="tab-trigger" data-tab="security">Security</button>
+                        <button class="tab-trigger" data-tab="data">Data & Privacy</button>
+                    </div>
+
+                    <!-- Profile Settings Tab -->
+                    <div class="tab-content active" data-tab="profile">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="user"></i>
+                                    Profile Visibility
+                                </h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="profileVisibility">Profile visibility</label>
+                                    <select id="profileVisibility" name="profileVisibility" class="form-select">
+                                        <option value="public">Public - Visible to everyone</option>
+                                        <option value="connections">Connections only</option>
+                                        <option value="private">Private - Only you</option>
+                                    </select>
+                                </div>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Contact Information Visibility</h4>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Show email address</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Allow
+                                            others to see your email</p>
+                                    </div>
+                                    <div class="switch" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="showEmail" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Show phone number</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Allow
+                                            others to see your phone</p>
+                                    </div>
+                                    <div class="switch" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="showPhone" style="display: none;">
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Allow direct messaging</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Let
+                                            recruiters message you directly</p>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="allowMessaging" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div>
+                                        <label class="form-label">Show online status</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Display
+                                            when you're active</p>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="showOnlineStatus" style="display: none;" checked>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Settings Tab -->
+                    <div class="tab-content" data-tab="notifications">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="bell"></i>
+                                    Notification Preferences
+                                </h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Delivery Methods</h4>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <i data-lucide="mail" style="color: hsl(var(--muted-foreground));"></i>
+                                        <div>
+                                            <label class="form-label">Email notifications</label>
+                                            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Receive
+                                                notifications via email</p>
+                                        </div>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="emailNotifications" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <i data-lucide="smartphone" style="color: hsl(var(--muted-foreground));"></i>
+                                        <div>
+                                            <label class="form-label">Push notifications</label>
+                                            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Receive
+                                                browser push notifications</p>
+                                        </div>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="pushNotifications" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Notification Types</h4>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">New internship alerts</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Get
+                                            notified about new opportunities</p>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="internshipAlerts" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Application updates</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Status
+                                            changes on your applications</p>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="applicationUpdates" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Weekly digest</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Summary of
+                                            your activity and new opportunities</p>
+                                    </div>
+                                    <div class="switch" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="weeklyDigest" style="display: none;">
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div>
+                                        <label class="form-label">Marketing emails</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Tips,
+                                            success stories, and product updates</p>
+                                    </div>
+                                    <div class="switch" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="marketingEmails" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings Tab -->
+                    <div class="tab-content" data-tab="security">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="shield"></i>
+                                    Account Security
+                                </h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Authentication</h4>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <label class="form-label">Two-factor authentication</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Add an
+                                            extra layer of security to your account</p>
+                                    </div>
+                                    <div class="switch" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="twoFactorEnabled" style="display: none;">
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                                    <div>
+                                        <label class="form-label">Login alerts</label>
+                                        <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Get
+                                            notified of new sign-ins</p>
+                                    </div>
+                                    <div class="switch checked" onclick="toggleSwitch(this)">
+                                        <div class="switch-thumb"></div>
+                                        <input type="checkbox" name="loginAlerts" style="display: none;" checked>
+                                    </div>
+                                </div>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Session Management</h4>
+
+                                <div class="form-group" style="max-width: 300px;">
+                                    <label class="form-label" for="sessionTimeout">Session timeout</label>
+                                    <select id="sessionTimeout" name="sessionTimeout" class="form-select">
+                                        <option value="1">1 hour</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="24" selected>24 hours</option>
+                                        <option value="168">1 week</option>
+                                        <option value="never">Never</option>
+                                    </select>
+                                </div>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Password & Access</h4>
+
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="btn btn-outline">
+                                        <i data-lucide="key"></i>
+                                        Change Password
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i data-lucide="eye"></i>
+                                        Active Sessions
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data & Privacy Settings Tab -->
+                    <div class="tab-content" data-tab="data">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="globe"></i>
+                                    Data & Privacy
+                                </h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Data Export</h4>
+                                <p
+                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                    Download a copy of your data including profile information, applications, and
+                                    activity.
+                                </p>
+                                <button class="btn btn-outline" style="margin-bottom: 1.5rem;">
+                                    <i data-lucide="download"></i>
+                                    Download My Data
+                                </button>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Account Management</h4>
+                                <p
+                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                    These actions are permanent and cannot be undone.
+                                </p>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 300px;">
+                                    <button class="btn btn-outline">
+                                        Clear Activity History
+                                    </button>
+                                    <button class="btn"
+                                        style="background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground));">
+                                        <i data-lucide="trash-2"></i>
+                                        Delete Account
+                                    </button>
+                                </div>
+
+                                <div style="height: 1px; background: hsl(var(--border)); margin: 1.5rem 0;"></div>
+
+                                <h4 style="font-weight: 500; margin-bottom: 1rem;">Privacy Policy</h4>
+                                <p
+                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                    Review how we collect, use, and protect your personal information.
+                                </p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="btn"
+                                        style="background: transparent; color: hsl(var(--primary)); padding: 0; height: auto; text-decoration: underline;">
+                                        Privacy Policy
+                                    </button>
+                                    <button class="btn"
+                                        style="background: transparent; color: hsl(var(--primary)); padding: 0; height: auto; text-decoration: underline;">
+                                        Terms of Service
+                                    </button>
+                                    <button class="btn"
+                                        style="background: transparent; color: hsl(var(--primary)); padding: 0; height: auto; text-decoration: underline;">
+                                        Cookie Policy
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+     <%- include('../includes/footer.ejs') %>
+
+    <script src="/js/student.js"></script>
+    <script>
+        // Always expand sidebar on page load
+        localStorage.setItem('sidebarCollapsed', 'false');
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Set active navigation item
+        setActiveNavItem('settings');
+
+        // Settings-specific functionality
+        function toggleSwitch(switchElement) {
+            switchElement.classList.toggle('checked');
+            const input = switchElement.querySelector('input[type="checkbox"]');
+            if (input) {
+                input.checked = !input.checked;
+                // Save setting to localStorage
+                saveSettingToStorage(input.name, input.checked);
+            }
+        }
+
+        function saveSettingToStorage(name, value) {
+            const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+            settings[name] = value;
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+        }
+
+        function saveAllSettings() {
+            const settings = {};
+
+            // Collect all form inputs
+            document.querySelectorAll('input, select').forEach(input => {
+                if (input.name) {
+                    if (input.type === 'checkbox') {
+                        settings[input.name] = input.checked;
+                    } else {
+                        settings[input.name] = input.value;
+                    }
+                }
+            });
+
+            // Save to localStorage
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+
+            // Show success message
+            InternHub.showNotification('All settings saved successfully!', 'success');
+        }
+
+        function loadSavedSettings() {
+            const savedSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+
+            // Apply saved settings to form elements
+            Object.keys(savedSettings).forEach(key => {
+                const element = document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = savedSettings[key];
+                        // Update switch visual state
+                        const switchContainer = element.closest('.switch');
+                        if (switchContainer) {
+                            if (savedSettings[key]) {
+                                switchContainer.classList.add('checked');
+                            } else {
+                                switchContainer.classList.remove('checked');
+                            }
+                        }
+                    } else {
+                        element.value = savedSettings[key];
+                    }
+                }
+            });
+        }
+
+        // Load saved settings on page load
+        loadSavedSettings();
+
+        // Add change listeners to all form elements
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('change', (e) => {
+                const name = e.target.name;
+                if (name) {
+                    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+                    saveSettingToStorage(name, value);
+                }
+            });
+        });
+        const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  const mobileMenuBtn = document.getElementById('mobile-menu-button');
+
+  function openSidebar() {
+    sidebar.classList.add('show');
+    sidebarOverlay.classList.add('show');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+  }
+
+  mobileMenuBtn.addEventListener('click', openSidebar);
+  sidebarOverlay.addEventListener('click', closeSidebar);
+
+  // Optional: close sidebar on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") closeSidebar();
+  });
+    </script>
+</body>
+
+</html>

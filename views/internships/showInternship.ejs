@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internship Details</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .internship-details-container {
+        max-width: 700px;
+        margin: 2rem auto;
+        background: #fff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        padding: 2.5rem 2rem;
+      }
+      .internship-title {
+        color: var(--primary);
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .internship-meta {
+        color: #6b7280;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .internship-section {
+        margin-bottom: 1.5rem;
+      }
+      .internship-label {
+        font-weight: 600;
+        color: var(--accent);
+        margin-right: 0.5rem;
+      }
+      .internship-value {
+        color: var(--ink);
+      }
+      .internship-perks,
+      .internship-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .internship-chip {
+        background: var(--muted);
+        color: var(--primary);
+        border-radius: 9999px;
+        padding: 0.3rem 1rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      @media (max-width: 600px) {
+        .internship-details-container {
+          padding: 1rem 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="body-bg body-text">
+    <div class="internship-details-container">
+      <div class="internship-title"><%= internship.title %></div>
+      <div class="internship-meta">
+        <span><%= internship.location %> | <%= internship.mode %></span>
+        &middot; <span>Duration: <%= internship.duration %></span> &middot;
+        <span>Stipend: <%= internship.stipend %></span>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Description:</span>
+        <span class="internship-value"><%= internship.description %></span>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Perks:</span>
+        <div class="internship-perks">
+          <% if (Array.isArray(internship.perks)) { %> <%
+          internship.perks.forEach(function(perk) { %>
+          <span class="internship-chip"><%= perk %></span>
+          <% }) %> <% } else if (internship.perks) { %>
+          <span class="internship-chip"><%= internship.perks %></span>
+          <% } else { %>
+          <span class="internship-value">None</span>
+          <% } %>
+        </div>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Skills Required:</span>
+        <div class="internship-skills">
+          <% if (Array.isArray(internship.skills_required)) { %> <%
+          internship.skills_required.forEach(function(skill) { %>
+          <span class="internship-chip"><%= skill %></span>
+          <% }) %> <% } else if (internship.skills_required) { %>
+          <span class="internship-chip"><%= internship.skills_required %></span>
+          <% } else { %>
+          <span class="internship-value">Not specified</span>
+          <% } %>
+        </div>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Openings:</span>
+        <span class="internship-value"><%= internship.openings %></span>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Application Deadline:</span>
+        <span class="internship-value"
+          ><%= internship.application_deadline ?
+          internship.application_deadline.toDateString() : 'N/A' %></span
+        >
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Posted Date:</span>
+        <span class="internship-value"
+          ><%= internship.posted_date ? internship.posted_date.toDateString() :
+          'N/A' %></span
+        >
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Status:</span>
+        <span class="internship-value"><%= internship.status %></span>
+      </div>
+      <div class="internship-section">
+        <span class="internship-label">Company:</span>
+        <span class="internship-value"
+          ><%= internship.company && internship.company.name ?
+          internship.company.name : 'N/A' %></span
+        >
+      </div>
+    </div>
+  </body>
+</html>
+

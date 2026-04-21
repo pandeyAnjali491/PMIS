@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Scheme</title>
+    <meta name="description" content="Discover and apply to internship opportunities from top companies.">
+    <link rel="stylesheet" href="/css/student.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <!-- Add inside .navbar-left -->
+           <button id="mobile-menu-button" class="hamburger-btn" aria-label="Open sidebar">
+  <i data-lucide="menu"></i>
+</button>
+        </div>
+        <div class="navbar-right">
+            <div class="profile-avatar" onclick="toggleProfileMenu()">
+                <img src="/css/profile.jpeg" alt="Profile"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="avatar-fallback" style="display: none;">
+                    <i data-lucide="user"></i>
+                </div>
+            </div>
+            <div class="profile-menu" id="profileMenu">
+                <a href="/student/profile">View Profile</a>
+                <a href="/student/settings">Settings</a>
+                <div class="menu-separator"></div>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title" id="sidebarTitle">PMIS</h2>
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i data-lucide="chevron-left" id="toggleIcon"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/student/dashboard" class="nav-item" data-page="index">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/student/profile" class="nav-item" data-page="profile">
+                    <i data-lucide="user"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+                <a href="/student/internships" class="nav-item active" data-page="internships">
+                    <i data-lucide="briefcase"></i>
+                    <span class="nav-text">Internships</span>
+                </a>
+                <a href="/student/settings" class="nav-item" data-page="settings">
+                    <i data-lucide="settings"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="flex" style="align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <h1 style="font-size: 2rem; font-weight: 700; color: hsl(var(--foreground));">Internship
+                        Opportunities</h1>
+                    <button class="btn btn-primary">
+                        <i data-lucide="bookmark-plus"></i>
+                        Saved Applications
+                    </button>
+                </div>
+
+                <div class="tabs" id="internshipTabs">
+                    <!-- Tab Navigation -->
+                    <div class="tab-list">
+                        <button class="tab-trigger active" data-tab="browse">Browse Internships</button>
+                        <button class="tab-trigger" data-tab="applied">My Applications</button>
+                        <button class="tab-trigger" data-tab="recommended">Recommended</button>
+                    </div>
+
+                    <!-- Browse Internships Tab -->
+                    <div class="tab-content active" data-tab="browse">
+                        <!-- Search and Filters -->
+                        <div class="card" style="margin-bottom: 1.5rem;">
+                            <div class="search-filter-bar">
+                                <div class="search-input-wrapper">
+                                    <i data-lucide="search" class="search-icon"></i>
+                                    <input type="text" id="searchInput" class="search-input"
+                                        placeholder="Search internships or companies...">
+                                </div>
+                                <select id="locationFilter" class="filter-select">
+                                    <option value="">All Locations</option>
+                                    <option value="CA">California</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="NY">New York</option>
+                                </select>
+                                <select id="typeFilter" class="filter-select">
+                                    <option value="">All Types</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Remote">Remote</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Internship Listings -->
+                        <div id="internshipListings" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <!-- Google Internship -->
+                            <div class="card internship-listing" data-type="Full-time">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: start; justify-content: space-between;">
+                                        <div style="display: flex; gap: 1rem;">
+                                            <div class="company-logo">🏢</div>
+                                            <div style="flex: 1;">
+                                                <div
+                                                    style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <h3 class="internship-role"
+                                                        style="font-size: 1.25rem; font-weight: 600;">Software Engineer
+                                                        Intern</h3>
+                                                    <span class="badge badge-destructive">Urgent</span>
+                                                    <span class="badge badge-primary">95% match</span>
+                                                </div>
+                                                <p class="internship-company"
+                                                    style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                    Google</p>
+                                                <p
+                                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    Join Google's world-class engineering team and work on products used
+                                                    by billions of people.</p>
+
+                                                <div
+                                                    style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    <span class="internship-location"
+                                                        style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="map-pin"></i>
+                                                        Mountain View, CA
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="dollar-sign"></i>
+                                                        $8,000/month
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="clock"></i>
+                                                        12 weeks
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="users"></i>
+                                                        2500 applicants
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="calendar"></i>
+                                                        Deadline: March 15, 2024
+                                                    </span>
+                                                </div>
+
+                                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                                    <span class="badge badge-secondary">React</span>
+                                                    <span class="badge badge-secondary">Python</span>
+                                                    <span class="badge badge-secondary">Machine Learning</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button class="btn btn-outline">
+                                                <i data-lucide="star"></i>
+                                                Save
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                Apply Now
+                                                <i data-lucide="external-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Microsoft Internship -->
+                            <div class="card internship-listing" data-type="Full-time">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: start; justify-content: space-between;">
+                                        <div style="display: flex; gap: 1rem;">
+                                            <div class="company-logo">🪟</div>
+                                            <div style="flex: 1;">
+                                                <div
+                                                    style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <h3 class="internship-role"
+                                                        style="font-size: 1.25rem; font-weight: 600;">Product Manager
+                                                        Intern</h3>
+                                                    <span class="badge badge-outline">Open</span>
+                                                    <span class="badge badge-primary">87% match</span>
+                                                </div>
+                                                <p class="internship-company"
+                                                    style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                    Microsoft</p>
+                                                <p
+                                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    Drive product strategy and work with cross-functional teams to build
+                                                    innovative solutions.</p>
+
+                                                <div
+                                                    style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    <span class="internship-location"
+                                                        style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="map-pin"></i>
+                                                        Seattle, WA
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="dollar-sign"></i>
+                                                        $7,500/month
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="clock"></i>
+                                                        10 weeks
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="users"></i>
+                                                        1800 applicants
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="calendar"></i>
+                                                        Deadline: March 20, 2024
+                                                    </span>
+                                                </div>
+
+                                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                                    <span class="badge badge-secondary">Product Strategy</span>
+                                                    <span class="badge badge-secondary">Analytics</span>
+                                                    <span class="badge badge-secondary">UX Design</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button class="btn btn-outline">
+                                                <i data-lucide="star"></i>
+                                                Save
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                Apply Now
+                                                <i data-lucide="external-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Meta Internship -->
+                            <div class="card internship-listing" data-type="Full-time">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: start; justify-content: space-between;">
+                                        <div style="display: flex; gap: 1rem;">
+                                            <div class="company-logo">📘</div>
+                                            <div style="flex: 1;">
+                                                <div
+                                                    style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <h3 class="internship-role"
+                                                        style="font-size: 1.25rem; font-weight: 600;">Frontend Developer
+                                                        Intern</h3>
+                                                    <span class="badge badge-destructive">Urgent</span>
+                                                    <span class="badge badge-primary">92% match</span>
+                                                </div>
+                                                <p class="internship-company"
+                                                    style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                    Meta</p>
+                                                <p
+                                                    style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    Build the next generation of social technology and connect people
+                                                    around the world.</p>
+
+                                                <div
+                                                    style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 1rem;">
+                                                    <span class="internship-location"
+                                                        style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="map-pin"></i>
+                                                        Menlo Park, CA
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="dollar-sign"></i>
+                                                        $8,200/month
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="clock"></i>
+                                                        12 weeks
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="users"></i>
+                                                        3200 applicants
+                                                    </span>
+                                                    <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                        <i data-lucide="calendar"></i>
+                                                        Deadline: March 10, 2024
+                                                    </span>
+                                                </div>
+
+                                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                                    <span class="badge badge-secondary">React</span>
+                                                    <span class="badge badge-secondary">JavaScript</span>
+                                                    <span class="badge badge-secondary">GraphQL</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button class="btn btn-outline">
+                                                <i data-lucide="star"></i>
+                                                Save
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                Apply Now
+                                                <i data-lucide="external-link"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- My Applications Tab -->
+                    <div class="tab-content" data-tab="applied">
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div class="card">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div>
+                                            <div
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <h3 style="font-size: 1.125rem; font-weight: 600;">Backend Developer
+                                                    Intern</h3>
+                                                <span class="badge badge-success">Interview Scheduled</span>
+                                            </div>
+                                            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                TechCorp</p>
+                                            <p
+                                                style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                Applied: Feb 10, 2024</p>
+                                            <p style="font-size: 0.875rem; font-weight: 500;">Next Step: Technical
+                                                Interview - Feb 20, 2024</p>
+                                        </div>
+                                        <button class="btn btn-outline">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div>
+                                            <div
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                <h3 style="font-size: 1.125rem; font-weight: 600;">Full Stack Intern
+                                                </h3>
+                                                <span class="badge badge-outline">Under Review</span>
+                                            </div>
+                                            <p style="color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                StartupXYZ</p>
+                                            <p
+                                                style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                Applied: Feb 5, 2024</p>
+                                            <p style="font-size: 0.875rem; font-weight: 500;">Next Step: Waiting for
+                                                response</p>
+                                        </div>
+                                        <button class="btn btn-outline">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Tab -->
+                    <div class="tab-content" data-tab="recommended">
+                        <div class="card" style="margin-bottom: 1.5rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i data-lucide="trending-up"></i>
+                                    Recommended Based on Your Profile
+                                </h3>
+                            </div>
+                            <div style="padding: 1.5rem;">
+                                <p style="color: hsl(var(--muted-foreground));">
+                                    These internships match your skills, interests, and career goals.
+                                    We've analyzed your profile to find the best opportunities for you.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <!-- High Match Internships (90%+) -->
+                            <div class="card" style="border: 1px solid hsl(var(--primary) / 0.2);">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: start; justify-content: space-between;">
+                                        <div style="display: flex; gap: 1rem;">
+                                            <div class="company-logo">🏢</div>
+                                            <div style="flex: 1;">
+                                                <div
+                                                    style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Software Engineer
+                                                        Intern</h3>
+                                                    <span class="badge badge-primary"
+                                                        style="background: var(--gradient-primary);color: white;">95% Perfect
+                                                        Match</span>
+                                                </div>
+                                                <p
+                                                    style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                    Google</p>
+                                                <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                                                    Join Google's world-class engineering team and work on products used
+                                                    by billions of people.</p>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary">
+                                            Apply Now
+                                            <i data-lucide="external-link"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="border: 1px solid hsl(var(--primary) / 0.2);">
+                                <div style="padding: 1.5rem;">
+                                    <div style="display: flex; align-items: start; justify-content: space-between;">
+                                        <div style="display: flex; gap: 1rem;">
+                                            <div class="company-logo">📘</div>
+                                            <div style="flex: 1;">
+                                                <div
+                                                    style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <h3 style="font-size: 1.25rem; font-weight: 600;">Frontend Developer
+                                                        Intern</h3>
+                                                    <span class="badge badge-primary"
+                                                        style="background: var(--gradient-primary);color: white;">92% Perfect
+                                                        Match</span>
+                                                </div>
+                                                <p
+                                                    style="font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem;">
+                                                    Meta</p>
+                                                <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">
+                                                    Build the next generation of social technology and connect people
+                                                    around the world.</p>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary">
+                                            Apply Now
+                                            <i data-lucide="external-link"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <%- include('../includes/footer.ejs') %>
+
+    <script src="/js/student.js"></script>
+    <script>
+        // Always expand sidebar on page load
+        localStorage.setItem('sidebarCollapsed', 'false');
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Set active navigation item
+        setActiveNavItem('internships');
+
+        // Initialize search functionality
+        initializeSearch();
+        const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  const mobileMenuBtn = document.getElementById('mobile-menu-button');
+
+  function openSidebar() {
+    sidebar.classList.add('show');
+    sidebarOverlay.classList.add('show');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+  }
+
+  mobileMenuBtn.addEventListener('click', openSidebar);
+  sidebarOverlay.addEventListener('click', closeSidebar);
+
+  // Optional: close sidebar on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") closeSidebar();
+  });
+    </script>
+</body>
+
+</html>

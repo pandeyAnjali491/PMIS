@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Scheme</title>
+  <meta name="description" content="Manage your professional profile and showcase your skills to potential employers.">
+  <link rel="stylesheet" href="/css/student.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+  
+      <!-- Add inside .navbar-left -->
+      <button id="mobile-menu-button" class="hamburger-btn" aria-label="Open sidebar">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+    <div class="navbar-right">
+      <div class="profile-avatar" onclick="toggleProfileMenu()">
+        <img src="/css/profile.jpeg" alt="Profile"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="avatar-fallback" style="display: none;">
+          <i data-lucide="user"></i>
+        </div>
+      </div>
+      <div class="profile-menu" id="profileMenu">
+        <a href="/student/profile">Profile</a>
+        <a href="/student/settings">Settings</a>
+        <div class="menu-separator"></div>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title" id="sidebarTitle">PMIS</h2>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+          <i data-lucide="chevron-left" id="toggleIcon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/student/dashboard" class="nav-item" data-page="dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="/student/profile" class="nav-item active" data-page="profile">
+          <i data-lucide="user"></i>
+          <span class="nav-text">Profile</span>
+        </a>
+        <a href="/student/internships" class="nav-item" data-page="internships">
+          <i data-lucide="briefcase"></i>
+          <span class="nav-text">Internships</span>
+        </a>
+        <a href="/student/settings" class="nav-item" data-page="settings">
+          <i data-lucide="settings"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="tabs" id="profileTabs">
+          <!-- Profile View Tab -->
+          <div class="tab-content active" data-tab="view">
+            <div class="card">
+              <div class="card-header">
+                <h1 class="card-title">
+                  <i data-lucide="user"></i>
+                  Professional Profile
+                </h1>
+                <a class="btn btn-primary" href="/student/<%= student._id %>/edit">
+                  <i data-lucide="edit"></i>
+                  Edit Profile
+                </a>
+              </div>
+
+              <div style="padding: 2rem;">
+                <!-- Profile Header -->
+                <div class="profile-header" style="margin-bottom: 2rem;">
+                  <div class="profile-avatar-large">
+                    <img src="/css/profile.jpeg" alt="<%= student.name %>"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="avatar-fallback-large" style="display: none;">
+                      <i data-lucide="user"></i>
+                    </div>
+                  </div>
+                  <div class="profile-info">
+                    <h2 id="profileName">
+                      <%= student.name %>
+                    </h2>
+                    <p class="profile-role" id="profileRole">
+                      <%= student.education %> Student
+                    </p>
+                    <div class="profile-completion">
+                      <div class="completion-bar">
+                        <div class="completion-fill" style="width: 85%"></div>
+                      </div>
+                      <span>Profile 85% Complete</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card" style="margin-bottom: 2rem;">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i data-lucide="mail"></i>
+                      Contact Information
+                    </h3>
+                  </div>
+                  <div style="padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                      <div>
+                        <strong>Email:</strong>
+                        <p id="profileEmail">
+                          <%= student.email %>
+                        </p>
+                      </div>
+                      <div>
+                        <strong>Phone:</strong>
+                        <p id="profilePhone">
+                          <%= student.phone %>
+                        </p>
+                      </div>
+                      <div>
+                        <strong>Location:</strong>
+                        <p id="profileLocation">
+                          <%= student.state %>, <%= student.district %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Education -->
+                <div class="card" style="margin-bottom: 2rem;">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i data-lucide="graduation-cap"></i>
+                      Education
+                    </h3>
+                  </div>
+                  <div style="padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                      <div>
+                        <strong>College:</strong>
+                        <p id="profileCollege">
+                          <%= student.college %>
+                        </p>
+                      </div>
+                      <div>
+                        <strong>Course:</strong>
+                        <p id="profileCourse">
+                          <%= student.course %>
+                        </p>
+                      </div>
+                      <div>
+                        <strong>Graduation Year:</strong>
+                        <p id="profileGradYear">
+                          <%= student.yearOfGraduation %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="card" style="margin-bottom: 2rem;">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i data-lucide="code"></i>
+                      Technical Skills
+                    </h3>
+                  </div>
+                  <div style="padding: 1.5rem;">
+                    <div id="skillsList" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                      <% if(student.skills) { student.skills.split(',').forEach(skill=> { %>
+                        <span class="badge badge-primary">
+                          <%= skill.trim() %>
+                        </span>
+                        <% }) } %>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="card" style="margin-bottom: 2rem;">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i data-lucide="file-text"></i>
+                      About Me
+                    </h3>
+                  </div>
+                  <div style="padding: 1.5rem;">
+                    <p id="profileBio">
+                      <%= student.preferred_domain %> | <%= student.internship_type %> Internship
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+   <%- include('../includes/footer.ejs') %>
+
+  <script src="/js/student.js"></script>
+  <script>
+    localStorage.setItem('sidebarCollapsed', 'false');
+    lucide.createIcons();
+    const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  const mobileMenuBtn = document.getElementById('mobile-menu-button');
+
+  function openSidebar() {
+    sidebar.classList.add('show');
+    sidebarOverlay.classList.add('show');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('show');
+    sidebarOverlay.classList.remove('show');
+  }
+
+  mobileMenuBtn.addEventListener('click', openSidebar);
+  sidebarOverlay.addEventListener('click', closeSidebar);
+
+  // Optional: close sidebar on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") closeSidebar();
+  });
+  </script>
+</body>
+
+</html>

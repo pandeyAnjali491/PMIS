@@ -1,0 +1,177 @@
+<%- layout('layouts/boilerplate/company.ejs') %>
+<div class="container mx-auto px-6 py-10">
+  <!-- Company Header / Profile Summary -->
+  <div class="bg-white rounded-2xl shadow p-6 mb-10 border">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div class="flex items-start gap-5">
+        <div class="h-20 w-20 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold">
+          <%= company.name ? company.name.charAt(0) : 'C' %>
+        </div>
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-1"><%= company.name %></h1>
+          <p class="text-sm text-gray-500"><%= company.industry_type %> • <%= company.job_type %></p>
+          <p class="text-xs text-gray-400 mt-1">Since <%= company.registration_date ? company.registration_date.toDateString() : '' %></p>
+          <div class="flex flex-wrap gap-3 mt-4">
+            <span class="inline-flex items-center gap-1 text-xs font-medium bg-blue-50 text-blue-600 px-3 py-1 rounded-full">
+              <i class="lucide lucide-mail size-3"></i>email: <%= company.email %>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-medium bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">
+              <i class="lucide lucide-phone size-3"></i>ph no: <%= company.phone %>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-medium bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">
+              <i class="lucide lucide-user size-3"></i> HR: <%= company.hr_name %>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <a href="/company/profile/<%= company._id %>" class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium transition">View Profile</a>
+        <a href="/company/internships/new" class="px-5 py-2.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm font-medium shadow transition">+ Post Internship</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics / Stats -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="bg-white p-5 rounded-xl shadow border">
+      <p class="text-xs font-medium text-gray-500 tracking-wide">TOTAL INTERNSHIPS</p>
+      <p class="text-3xl font-bold mt-2 text-gray-800"><%= stats.totalInternships %></p>
+      <p class="text-xs mt-1 text-gray-400">All time postings</p>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow border">
+      <p class="text-xs font-medium text-gray-500 tracking-wide">ACTIVE ROLES</p>
+      <p class="text-3xl font-bold mt-2 text-gray-800"><%= stats.activeInternships %></p>
+      <p class="text-xs mt-1 text-gray-400">Currently visible</p>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow border">
+      <p class="text-xs font-medium text-gray-500 tracking-wide">TOTAL APPLICATIONS</p>
+      <p class="text-3xl font-bold mt-2 text-gray-800"><%= stats.totalApplications %></p>
+      <p class="text-xs mt-1 text-gray-400">Across all postings</p>
+    </div>
+    <div class="bg-white p-5 rounded-xl shadow border">
+      <p class="text-xs font-medium text-gray-500 tracking-wide">PENDING REVIEWS</p>
+      <p class="text-3xl font-bold mt-2 text-gray-800"><%= stats.pendingApplications %></p>
+      <p class="text-xs mt-1 text-gray-400">Need attention</p>
+    </div>
+  </div>
+
+  <!-- Internships Section -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+        <i class="lucide lucide-briefcase"></i> Posted Internships
+      </h2>
+      <a href="/company/internships" class="text-sm text-blue-600 hover:underline">View All →</a>
+    </div>
+
+    <% if (internships.length === 0) { %>
+      <div class="bg-gray-50 p-6 text-center rounded-lg border">
+        <p class="text-gray-500">You haven't posted any internships yet.</p>
+        <a href="/company/internships/new" class="text-blue-600 hover:underline">Create your first posting</a>
+      </div>
+    <% } else { %>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <% internships.slice(0,6).forEach(internship => { %>
+          <div class="bg-white shadow rounded-xl p-5 border hover:shadow-lg transition flex flex-col">
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-gray-800 mb-1"><%= internship.title %></h3>
+              <p class="text-xs text-gray-500 mb-3"><%= internship.location || 'Remote / Flexible' %></p>
+              <p class="text-sm text-gray-600 mb-4"><%= internship.description.substring(0,120) %>...</p>
+            </div>
+            <div class="flex items-center justify-between mt-auto pt-3 border-t">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full <%= internship.status === 'Active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' %>">
+                <%= internship.status %>
+              </span>
+              <a href="/company/internships/<%= internship._id %>" class="text-sm text-blue-600 hover:underline">Details</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Applications Overview -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+        <i class="lucide lucide-users"></i> Latest Applications
+      </h2>
+      <a href="/company/applications" class="text-sm text-blue-600 hover:underline">Manage All →</a>
+    </div>
+
+    <% if (applications.length === 0) { %>
+      <div class="bg-gray-50 p-6 text-center rounded-lg border">
+        <p class="text-gray-500">No applications received yet.</p>
+        <p class="text-xs text-gray-400 mt-1">You'll see applicants appear here as students apply.</p>
+      </div>
+    <% } else { %>
+      <div class="space-y-4">
+        <% applications.slice(0,5).forEach(app => { %>
+          <div class="bg-white border rounded-xl p-4 flex items-start justify-between hover:shadow transition">
+            <div>
+              <p class="font-semibold text-gray-800"><%= app.studentName || 'Student Applicant' %></p>
+              <p class="text-xs text-gray-500 mt-1">Applied for <span class="font-medium text-gray-700"><%= app.internshipTitle || 'Internship' %></span></p>
+              <p class="text-xs text-gray-400 mt-1"><%= app.appliedAt ? new Date(app.appliedAt).toDateString() : '' %></p>
+            </div>
+            <span class="text-xs font-semibold px-3 py-1 rounded-full <%= app.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' : app.status === 'Accepted' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' %>">
+              <%= app.status %>
+            </span>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- HR Contact & Company Info -->
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="bg-white p-6 rounded-xl border shadow">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+        <i class="lucide lucide-info"></i> Company Details
+      </h3>
+      <dl class="text-sm space-y-3">
+        <div class="flex justify-between border-b pb-2">
+          <dt class="text-gray-500">Industry</dt>
+          <dd class="font-medium text-gray-800"><%= company.industry_type %></dd>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+          <dt class="text-gray-500">Job Type</dt>
+          <dd class="font-medium text-gray-800"><%= company.job_type %></dd>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+          <dt class="text-gray-500">Location</dt>
+          <dd class="font-medium text-gray-800"><%= company.district %>, <%= company.state %></dd>
+        </div>
+        <div class="flex justify-between border-b pb-2">
+          <dt class="text-gray-500">Address</dt>
+          <dd class="font-medium text-gray-800 w-1/2 text-right"><%= company.address %></dd>
+        </div>
+        <% if (company.website) { %>
+        <div class="flex justify-between border-b pb-2">
+          <dt class="text-gray-500">Website</dt>
+          <dd class="font-medium text-blue-600"><a href="<%= company.website %>" target="_blank" class="hover:underline"><%= company.website %></a></dd>
+        </div>
+        <% } %>
+      </dl>
+    </div>
+    <div class="bg-white p-6 rounded-xl border shadow">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+        <i class="lucide lucide-user-circle"></i> HR Contact
+      </h3>
+      <div class="space-y-3 text-sm">
+        <p><span class="text-gray-500">Name:</span> <span class="font-medium text-gray-800"><%= company.hr_name %></span></p>
+        <p><span class="text-gray-500">Email:</span> <span class="font-medium text-gray-800"><%= company.hr_email %></span></p>
+        <p><span class="text-gray-500">Phone:</span> <span class="font-medium text-gray-800"><%= company.hr_phone %></span></p>
+      </div>
+      <!-- <div class="mt-5">
+        <a href="mailto:<%= company.hr_email %>" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition">
+          <i class="lucide lucide-mail"></i> Email HR
+        </a>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Optionally include lucide icons script if not already globally loaded -->
+<script>
+  if (window.lucide) { lucide.createIcons(); }
+</script>

@@ -1,0 +1,235 @@
+/* main.css extracted from home2.html */
+:root {
+  --primary: #0f5bbf; /* deep MCA-like blue */
+  --primary-dark: #0c4796; /* darker hover */
+  --accent: #ff8c00; /* saffron accent */
+  --muted: #eef5ff; /* pale blue background */
+  --ink: #1f2937; /* gray-800 text */
+}
+html,
+body {
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.slide-container {
+  transition: transform 0.5s ease-in-out;
+}
+.btn-primary,
+.btn-view-openings {
+  transition: background 0.2s, transform 0.2s !important;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-dark) !important;
+  /* No transform for pop-out */
+}
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover {
+  opacity: 0.9;
+}
+.body-bg {
+  background: var(--muted);
+}
+.body-text {
+  color: var(--ink);
+}
+.header-main {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.logo-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+.nav-desktop {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.nav-link {
+  color: #4b5563;
+  transition: color 0.2s;
+}
+.nav-link:hover {
+  color: var(--primary);
+}
+.section-about {
+  padding: 4rem 1rem;
+  background: #f3f4f6;
+}
+.about-container {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.section-pm-works {
+  padding: 4rem 1rem;
+  background: #fff;
+}
+.pm-works-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.pm-works-slideshow {
+  position: relative;
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+.section-program {
+  padding: 4rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.program-bg-gradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background: linear-gradient(135deg, var(--muted), #fff);
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+.program-container {
+  position: relative;
+  z-index: 10;
+}
+.program-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.btn-view-openings {
+  /* Use the same styles as .btn-primary */
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  font-size: 1.125rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-view-openings:hover {
+  background: var(--primary-dark);
+  transform: scale(1.12);
+}
+.section-find-match {
+  padding: 4rem 1rem;
+  background: #f3f4f6;
+}
+.find-match-container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.find-match-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.section-testimonials {
+  padding: 4rem 1rem;
+}
+.testimonials-container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.footer-main {
+  background: #0b1d3a;
+  color: #d1d5db;
+  padding: 3rem 1rem 2rem 1rem;
+}
+/* Carousel */
+.carousel-item {
+  padding: 10px 12px; /* Remove horizontal padding */
+  background: transparent; /* Remove white background */
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 350px; /* Fixed height for uniformity */
+  object-fit: cover; /* Fill container, crop if needed */
+  border-radius: 12px;
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .carousel-inner img {
+    max-height: 200px;
+    border-radius: 8px;
+  }
+  .carousel-item {
+    padding: 0 4px;
+  }
+}
+.section-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+}
+.section-title {
+  font-size: 1.5rem; /* Reduced font size */
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1f2937;
+  text-align: center;
+}
+.eligibility-container,
+.benefits-container {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  flex: 1;
+  min-width: 0; /* Ensures container can shrink on smaller screens */
+}
+.card {
+  background-color: #f9fafb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+.icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  border-radius: 9999px;
+}
+.icon-box i,
+.icon-box svg {
+  font-size: 2.5rem;
+}
+.eligibility-title-orange {
+  color: #f97316;
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Scheme</title>
+  <meta name="description"
+    content="Track your internship progress, discover new opportunities, and manage your career development with InternHub's comprehensive dashboard.">
+    <link rel="stylesheet" href="/css/student.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.395.0/lucide.min.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <!-- <a class="navbar-btn" href="/student/dashboard">
+        <i data-lucide="home"></i>
+        Home
+      </a> -->
+      <!-- Add inside .navbar-left -->
+      <button id="mobile-menu-button" class="hamburger-btn" aria-label="Open sidebar">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+    <div class="navbar-right">
+      <div class="profile-avatar" onclick="toggleProfileMenu()">
+        <img src="/css/profile.jpeg" alt="Profile"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="avatar-fallback" style="display: none;">
+          <i data-lucide="user"></i>
+        </div>
+      </div>
+      <div class="profile-menu" id="profileMenu">
+        <a href="/student/profile">View Profile</a>
+        <a href="/student/settings">Settings</a>
+        <div class="menu-separator"></div>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title" id="sidebarTitle">PMIS</h2>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+          <i data-lucide="chevron-left" id="toggleIcon"></i>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/student/dashboard" class="nav-item active" data-page="index">
+          <i data-lucide="layout-dashboard"></i>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="/student/profile" class="nav-item" data-page="profile">
+          <i data-lucide="user"></i>
+          <span class="nav-text">Profile</span>
+        </a>
+        <a href="/student/internships" class="nav-item" data-page="internships">
+          <i data-lucide="briefcase"></i>
+          <span class="nav-text">Internships</span>
+        </a>
+        <a href="/student/settings" class="nav-item" data-page="settings">
+          <i data-lucide="settings"></i>
+          <span class="nav-text">Settings</span>
+        </a>
+        <div class="nav-item logout-item" onclick="logout()" style="cursor: pointer;">
+          <i data-lucide="log-out"></i>
+          <span class="nav-text">Logout</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        <!-- Profile Card -->
+        <div class="card profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar-large">
+              <img src="/css/profile.jpeg" alt="<%= student.name %>"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+              <div class="avatar-fallback-large" style="display: none;">
+                <i data-lucide="user"></i>
+              </div>
+            </div>
+            <div class="profile-info">
+              <h2>
+                <%=student.name%>
+              </h2>
+              <p class="profile-role">
+                <%=student.preferred_domain%>
+              </p>
+              <div class="profile-completion">
+                <div class="completion-bar">
+                  <div class="completion-fill" style="width: 85%"></div>
+                </div>
+                <span>85% Complete</span>
+              </div>
+            </div>
+            <a class="btn btn-primary" href="/student/<%= student._id %>/edit">
+              <i data-lucide="edit"></i>
+              Edit Profile
+            </a>
+          </div>
+        </div>
+
+        <!-- Recommended Internships -->
+        <div class="recommended-section">
+          <h2>Recommended for You</h2>
+          <div class="internship-grid">
+            <% internships.forEach(internship=> { %>
+              <div class="internship-card">
+                <div class="internship-card-header">
+                  <div class="company-logo">🏢</div>
+                  <div>
+                    <div class="internship-title">
+                      <%= internship.title %>
+                    </div>
+                    <div class="internship-company">
+                      <%= internship.company ? internship.company.name : 'Company' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="internship-card-body">
+                  <div class="internship-location"><i data-lucide="map-pin"></i>
+                    Location: <%= internship.location %>
+                  </div>
+                  <div class="internship-mode"><i data-lucide="briefcase"></i>
+                    Mode: <%= internship.mode %>
+                  </div>
+                  <div class="internship-stipend"><i data-lucide="wallet"></i>
+                    Stipend: <%= internship.stipend %>
+                  </div>
+                  <div class="internship-skills">
+                    <% if (internship.skills_required) { internship.skills_required.split(',').forEach(skill=> { %>
+                      <span class="badge badge-skill">
+                        <%= skill.trim() %>
+                      </span>
+                      <% }) } %>
+                  </div>
+                </div>
+                <div class="internship-card-footer">
+                  <a href="/company/internships/<%= internship._id %>" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+              </div>
+              <% }) %>
+          </div>
+        </div>
+
+        <!-- Internship Cards Section -->
+        <div class="internship-cards-section">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i data-lucide="briefcase"></i>
+                Previous Internships
+              </h3>
+            </div>
+            <div class="internship-list">
+              <div class="internship-card">
+                <div class="company-logo">🔧</div>
+                <div class="internship-info">
+                  <h4>Frontend Developer Intern</h4>
+                  <p>TechCorp Solutions</p>
+                  <span class="duration">Summer 2023 • 12 weeks</span>
+                  <div class="rating">
+                    <i data-lucide="star" class="star-filled"></i>
+                  </div>
+                </div>
+                <div class="status-badge status-completed">Completed</div>
+              </div>
+              <div class="internship-card">
+                <div class="company-logo">🚀</div>
+                <div class="internship-info">
+                  <h4>Backend Developer Intern</h4>
+                  <p>StartupXYZ</p>
+                  <span class="duration">Fall 2023 • 16 weeks</span>
+                  <div class="rating">
+                    <i data-lucide="star" class="star-filled"></i>
+                  </div>
+                </div>
+                <div class="status-badge status-completed">Completed</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i data-lucide="clock"></i>
+                Live Applications
+              </h3>
+            </div>
+            <div class="internship-list">
+              <div class="internship-card">
+                <div class="company-logo">🍎</div>
+                <div class="internship-info">
+                  <h4>iOS Developer Intern</h4>
+                  <p>Apple Inc.</p>
+                  <span class="duration">Applied: Feb 15, 2024</span>
+                </div>
+                <div class="status-badge status-pending">Under Review</div>
+              </div>
+              <div class="internship-card">
+                <div class="company-logo">🎬</div>
+                <div class="internship-info">
+                  <h4>Data Science Intern</h4>
+                  <p>Netflix</p>
+                  <span class="duration">Applied: Feb 12, 2024</span>
+                </div>
+                <div class="status-badge status-interview">Interview Scheduled</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <%- include('../includes/footer.ejs') %>
+
+  <script src="/css/student.js"></script>
+  <script>
+    // Always expand sidebar on page load
+    localStorage.setItem('sidebarCollapsed', 'false');
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Set active navigation item
+    setActiveNavItem('index');
+
+    // Logout function
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.location.href = '/student/logout';
+      }
+    }
+  </script>
+</body>
+
+</html>

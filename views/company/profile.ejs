@@ -1,0 +1,83 @@
+<%- layout('/layouts/boilerplate/company.ejs') %>
+
+  <div class="container mx-auto px-6 py-10">
+    <!-- Page Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800">Company Profile</h2>
+      <a href="/company/profile/<%=company._id %>/edit"
+        class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+        Edit Profile
+      </a>
+    </div>
+
+    <!-- Profile Info Card -->
+    <div class="bg-white shadow-lg rounded-2xl p-8 border">
+      <!-- Company Name + Industry -->
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-gray-800">
+          <%= company.name %>
+        </h3>
+        <p class="text-gray-500">
+          <%= company.industry_type %>
+        </p>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+
+        <!-- Contact Info -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Contact Information</h4>
+          <p><span class="font-medium">Email:</span>
+            <%= company.email %>
+          </p>
+          <p><span class="font-medium">Phone:</span>
+            <%= company.phone %>
+          </p>
+          <p><span class="font-medium">Website:</span>
+            <a href="<%= company.website %>" target="_blank" class="text-blue-600 hover:underline">
+              <%= company.website %>
+            </a>
+          </p>
+        </div>
+
+        <!-- HR Info -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">HR Information</h4>
+          <p><span class="font-medium">Name:</span>
+            <%= company.hr_name %>
+          </p>
+          <p><span class="font-medium">Email:</span>
+            <%= company.hr_email %>
+          </p>
+          <p><span class="font-medium">Phone:</span>
+            <%= company.hr_phone %>
+          </p>
+        </div>
+
+        <!-- Address Info -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Company Address</h4>
+          <p>
+            <%= company.address %>
+          </p>
+          <p>
+            <%= company.district %>, <%= company.state %>
+          </p>
+        </div>
+
+        <!-- Registration Info -->
+        <div>
+          <h4 class="font-semibold text-gray-800 mb-2">Registration</h4>
+          <p><span class="font-medium">Date:</span>
+            <%= company.registration_date ? new Date(company.registration_date).toDateString() : "Not Provided" %>
+          </p>
+
+          <p><span class="font-medium">Job Type:</span>
+            <%= company.job_type %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>

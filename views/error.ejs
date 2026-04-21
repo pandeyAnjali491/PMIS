@@ -1,0 +1,31 @@
+<%- layout("./layouts/boilerplate/login.ejs")  %>
+
+<div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+  <div class="err-box text-center p-5 rounded-4 shadow-lg bg-white animate__animated animate__fadeInUp" style="max-width:600px;">
+    
+    <img src="/css/error.webp" alt="Error Illustration" class="mb-4" style="max-width:180px; animation: float 3s ease-in-out infinite;">
+    
+    <h1 class="fw-bold text-danger mb-3" style="font-size:2.2rem;">
+      <i class="fa-solid fa-triangle-exclamation me-2"></i> <%= message %>
+    </h1>
+    
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-center gap-3">
+      <a href="/" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+        <i class="fa-solid fa-house me-2"></i> Go Home
+      </a>
+      <a href="javascript:history.back()" class="btn btn-outline-danger px-4 py-2 rounded-pill">
+        <i class="fa-solid fa-arrow-left me-2"></i> Go Back
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating animation for image -->
+<style>
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+</style>

@@ -1,0 +1,142 @@
+<header class="header-main shadow-md sticky top-0 bg-white z-50">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="/" class="text-2xl font-bold text-[var(--primary)] tracking-tight"
+      aria-label="PM Internship Scheme home">PMIS</a>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex items-center gap-6" aria-label="Primary">
+      <a href="/" class="text-gray-600 hover:text-[var(--primary)] transition">Home</a>
+      <a href="#about" class="text-gray-600 hover:text-[var(--primary)] transition">About</a>
+      <a href="#program" class="text-gray-600 hover:text-[var(--primary)] transition">Program</a>
+      <a href="#testimonials" class="text-gray-600 hover:text-[var(--primary)] transition">Testimonials</a>
+
+      <div class="hidden md:flex items-center gap-4">
+        <!-- Login -->
+        <div class="relative">
+          <button onclick="toggleDropdown('desktop-login-dropdown')"
+            class="btn-primary px-4 py-2 rounded-full font-semibold shadow-md">
+            Login
+          </button>
+          <div id="desktop-login-dropdown"
+            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border">
+            <a href="/student/login" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Student</a>
+            <a href="/company/login" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Company</a>
+          </div>
+        </div>
+
+        <!-- Signup -->
+        <div class="relative">
+          <button onclick="toggleDropdown('desktop-signup-dropdown')"
+            class="btn-accent px-4 py-2 rounded-full font-semibold shadow-md">
+            Signup
+          </button>
+          <div id="desktop-signup-dropdown"
+            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 border">
+            <a href="/student/signup" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Student</a>
+            <a href="/company/signup" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Company</a>
+          </div>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- Hamburger (mobile only) -->
+    <button id="mobile-menu-button" class="md:hidden text-3xl text-gray-700 focus:outline-none"
+      aria-label="Toggle menu">
+      <!-- Hamburger Icon -->
+      <span id="hamburger-icon">&#9776;</span>
+      <!-- Close Icon (hidden initially) -->
+      <span id="close-icon" class="hidden">&times;</span>
+    </button>
+
+  </div>
+
+  <!-- mobile-view -->
+  <div id="mobile-menu"
+    class="max-h-0 overflow-hidden transition-all duration-500 ease-in-out bg-white shadow-lg rounded-b-2xl"
+    role="menu">
+
+    <div class="flex flex-col px-6 py-4 space-y-4">
+      <a href="/" class="block text-lg font-medium text-gray-700 hover:text-[var(--primary)] transition">Home</a>
+      <a href="#about" class="block text-lg font-medium text-gray-700 hover:text-[var(--primary)] transition">About</a>
+      <a href="#program"
+        class="block text-lg font-medium text-gray-700 hover:text-[var(--primary)] transition">Program</a>
+      <a href="#testimonials"
+        class="block text-lg font-medium text-gray-700 hover:text-[var(--primary)] transition">Testimonials</a>
+
+      <div class="pt-4 border-t space-y-3">
+        <!-- Login -->
+        <button onclick="toggleDropdown('mobile-login-dropdown')"
+          class="btn-primary w-full px-4 py-2 rounded-full font-semibold shadow-md">
+          Login
+        </button>
+        <div id="mobile-login-dropdown" class="hidden mt-2 w-full bg-white rounded-lg shadow-lg py-2 border">
+          <a href="/student/login" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Student</a>
+          <a href="/company/login" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Company</a>
+        </div>
+
+        <!-- Signup -->
+        <button onclick="toggleDropdown('mobile-signup-dropdown')"
+          class="btn-accent w-full px-4 py-2 rounded-full font-semibold shadow-md">
+          Signup
+        </button>
+        <div id="mobile-signup-dropdown" class="hidden mt-2 w-full bg-white rounded-lg shadow-lg py-2 border">
+          <a href="/student/signup" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Student</a>
+          <a href="/company/signup" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">As Company</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</header>
+
+<script>
+ const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const closeIcon = document.getElementById('close-icon');
+
+mobileMenuButton.addEventListener('click', () => {
+  const isClosed = mobileMenu.classList.contains('max-h-0');
+
+  if (isClosed) {
+    // Expand menu
+    mobileMenu.classList.remove('max-h-0');
+    mobileMenu.classList.add('max-h-screen');
+    hamburgerIcon.classList.add('hidden');
+    closeIcon.classList.remove('hidden');
+  } else {
+    // Collapse menu
+    mobileMenu.classList.add('max-h-0');
+    mobileMenu.classList.remove('max-h-screen');
+    hamburgerIcon.classList.remove('hidden');
+    closeIcon.classList.add('hidden');
+  }
+});
+
+//  Auto-close menu when resizing to desktop
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 768) {
+    mobileMenu.classList.add("max-h-0");
+    mobileMenu.classList.remove("max-h-screen");
+    hamburgerIcon.classList.remove("hidden");
+    closeIcon.classList.add("hidden");
+  }
+});
+
+function toggleDropdown(id) {
+  // close all dropdowns first
+  document.querySelectorAll("[id$='dropdown']").forEach(d => {
+    if (d.id !== id) d.classList.add("hidden");
+  });
+
+  // toggle the clicked one
+  const dropdown = document.getElementById(id);
+  dropdown.classList.toggle("hidden");
+}
+
+
+</script>
