@@ -75,7 +75,7 @@ PFMS/
 ### Clone the repository
 
 ```bash id="83sgu3"
-git clone https://github.com/pandeyAnjali491/pfms.git
+git clone https://github.com/pandeyAnjali491/PMIS.git
 ```
 
 ### Navigate to the project folder
